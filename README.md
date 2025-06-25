@@ -2,41 +2,94 @@
 Nombre: Benjamin Vivero
 
 Seccion: 2
-## Descripción del Sistema
-Este proyecto implementa tres patrones de diseño en Java: **Singleton**, **Bridge** y **Prototype**. Cada patrón tiene un propósito específico en el desarrollo de software, y se utiliza para resolver problemas comunes de diseño.
+# Sistema de Biblioteca con Patrones de Diseño
 
-## Patrones de Diseño Implementados
+Este proyecto implementa un sistema de gestión de biblioteca utilizando patrones de diseño para mejorar su estructura y funcionalidad.
 
-### 1. Singleton (Creacional)
+## Patrones Implementados
 
-**Descripción**: El patrón Singleton asegura que una clase tenga una única instancia y proporciona un punto de acceso global a ella.
+### 1. Singleton (Biblioteca.java)
+- **Función**: Garantizar una única instancia global de la biblioteca
+- **Implementación**:
+  ```java
+  private static Biblioteca instancia;
+  private Biblioteca() {}
+  
+  public static Biblioteca getInstancia() {
+      if (instancia == null) {
+          instancia = new Biblioteca();
+      }
+      return instancia;
+  }
+  ```
+- **Beneficios**: Acceso centralizado y consistente a los recursos de la biblioteca
 
-**Uso en el Proyecto**:
-- La clase `Singleton` implementa este patrón. Su constructor es privado, lo que impide que se creen instancias desde fuera de la clase.
-- El método `getInstance()` garantiza que solo se cree una instancia de `Singleton`, y la devuelve a cualquier parte del código que la solicite.
+### 2. Prototype (Libro.java)
+- **Función**: Permitir clonación de objetos libro existentes
+- **Implementación**:
+  ```java
+  public abstract Libro clonar();
+  
+  // En LibroFisico:
+  @Override
+  public Libro clonar() {
+      try {
+          return (LibroFisico) this.clone();
+      } catch (CloneNotSupportedException e) {
+          return null;
+      }
+  }
+  ```
+- **Beneficios**: Creación eficiente de nuevos objetos basados en existentes
 
-**Por qué usarlo**:
-- Es útil cuando se necesita un control centralizado sobre un recurso, como una conexión a una base de datos o una configuración global.
+### 3. Bridge (Formato.java)
+- **Función**: Separar la representación del libro de su formato de visualización
+- **Implementación**:
+  ```java
+  interface Formato {
+      String mostrar(Libro libro);
+  }
+  
+  class FormatoSimple implements Formato { ... }
+  class FormatoCompleto implements Formato { ... }
+  ```
+- **Beneficios**: Flexibilidad para añadir nuevos formatos sin modificar la estructura del libro
 
-### 2. Bridge (Estructural)
+## Flujo del Sistema
+```mermaid
+graph TD
+  A[Menú Principal] --> B[Agregar Libro]
+  A --> C[Listar Libros]
+  A --> D[Modificar Libro]
+  A --> E[Eliminar Libro]
+  D --> F[Buscar por ID]
+  E --> F
+```
 
-**Descripción**: El patrón Bridge desacopla una abstracción de su implementación, permitiendo que ambas evolucionen de manera independiente.
+## Funcionalidades Clave
+1. **CRUD Completo**:
+   - Creación: `agregarLibro()`
+   - Lectura: `listarLibros()`, `obtenerLibro()`
+   - Actualización: `modificarLibro()`
+   - Eliminación: `eliminarLibro()`
 
-**Uso en el Proyecto**:
-- Se define una interfaz `Implementor` y dos implementaciones concretas (`ConcreteImplementorA` y `ConcreteImplementorB`).
-- La clase abstracta `Abstraction` contiene una referencia a un objeto `Implementor`, y la clase `RefinedAbstraction` extiende `Abstraction` para implementar el método `operation()`, que utiliza el `Implementor`.
+2. **Gestión de Estado**:
+   - Persistencia en memoria mediante `HashMap`
+   - Validación de existencia previa a operaciones
 
-**Por qué usarlo**:
-- Permite cambiar la implementación de la abstracción sin modificar su interfaz, facilitando la escalabilidad y la flexibilidad en el diseño del sistema.
+## Ejecución
+1. Compilar:
+   ```bash
+   javac SistemaBiblioteca.java
+   ```
+2. Ejecutar:
+   ```bash
+   java SistemaBiblioteca
+   ```
 
-### 3. Prototype (Comportamiento)
-
-**Descripción**: El patrón Prototype permite copiar objetos existentes sin hacer el código dependiente de sus clases.
-
-**Uso en el Proyecto**:
-- La clase `Prototype` es abstracta y define el método `clone()`.
-- `ConcretePrototype` extiende `Prototype` y proporciona una implementación específica de `clone()`, creando una nueva instancia con los mismos atributos.
-
-**Por qué usarlo**:
+## Mejoras Futuras
+- Implementar persistencia en base de datos
+- Añadir soporte para formatos de exportación (PDF, CSV)
+- Implementar búsquedas avanzadas por autor o año
 - Es útil cuando la creación de un objeto es costosa o compleja. Permite crear copias a partir de un objeto existente, lo que simplifica la instanciación de nuevos objetos similares.
 
