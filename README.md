@@ -1,5 +1,6 @@
 # Proyecto de Gestión de Biblioteca
-
+Nombre: Benjamin Vivero
+Seccion: 2
 ## Descripción del Sistema
 Este sistema permite gestionar una biblioteca, registrar libros y realizar préstamos. Utiliza patrones de diseño para mejorar la estructura y funcionalidad del código.
 
