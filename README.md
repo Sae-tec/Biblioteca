@@ -1,95 +1,64 @@
-# Proyecto de Gestión de Biblioteca
-Nombre: Benjamin Vivero
+# Sistema de Gestión de Biblioteca
 
-Seccion: 2
-# Sistema de Biblioteca con Patrones de Diseño
+## 📚 Descripción del Sistema
 
-Este proyecto implementa un sistema de gestión de biblioteca utilizando patrones de diseño para mejorar su estructura y funcionalidad.
+Este sistema permite gestionar los libros de una biblioteca, incluyendo funcionalidades como:
 
-## Patrones Implementados
+- Agregar nuevos libros
+- Modificar información de libros existentes
+- Eliminar libros
+- Listar todos los libros
 
-### 1. Singleton (Biblioteca.java)
-- **Función**: Garantizar una única instancia global de la biblioteca
-- **Implementación**:
-  ```java
-  private static Biblioteca instancia;
-  private Biblioteca() {}
-  
-  public static Biblioteca getInstancia() {
-      if (instancia == null) {
-          instancia = new Biblioteca();
-      }
-      return instancia;
-  }
-  ```
-- **Beneficios**: Acceso centralizado y consistente a los recursos de la biblioteca
+El sistema simula una biblioteca simple y funcional a través de consola, con un enfoque en buenas prácticas de diseño orientado a objetos, utilizando **patrones de diseño** para una mejor organización y mantenibilidad del código.
 
-### 2. Prototype (Libro.java)
-- **Función**: Permitir clonación de objetos libro existentes
-- **Implementación**:
-  ```java
-  public abstract Libro clonar();
-  
-  // En LibroFisico:
-  @Override
-  public Libro clonar() {
-      try {
-          return (LibroFisico) this.clone();
-      } catch (CloneNotSupportedException e) {
-          return null;
-      }
-  }
-  ```
-- **Beneficios**: Creación eficiente de nuevos objetos basados en existentes
+## ❗ Problema a Resolver
 
-### 3. Bridge (Formato.java)
-- **Función**: Separar la representación del libro de su formato de visualización
-- **Implementación**:
-  ```java
-  interface Formato {
-      String mostrar(Libro libro);
-  }
-  
-  class FormatoSimple implements Formato { ... }
-  class FormatoCompleto implements Formato { ... }
-  ```
-- **Beneficios**: Flexibilidad para añadir nuevos formatos sin modificar la estructura del libro
+La gestión manual o mal estructurada de libros puede llevar a inconsistencias, duplicación de datos y dificultad en el mantenimiento del sistema. Este proyecto busca resolver estos problemas:
 
-## Flujo del Sistema
-```mermaid
-graph TD
-  A[Menú Principal] --> B[Agregar Libro]
-  A --> C[Listar Libros]
-  A --> D[Modificar Libro]
-  A --> E[Eliminar Libro]
-  D --> F[Buscar por ID]
-  E --> F
-```
+- Centralizando el acceso a la colección de libros
+- Permitiendo la clonación de libros cuando se requiera
+- Facilitando distintas formas de mostrar la información
 
-## Funcionalidades Clave
-1. **CRUD Completo**:
-   - Creación: `agregarLibro()`
-   - Lectura: `listarLibros()`, `obtenerLibro()`
-   - Actualización: `modificarLibro()`
-   - Eliminación: `eliminarLibro()`
+---
 
-2. **Gestión de Estado**:
-   - Persistencia en memoria mediante `HashMap`
-   - Validación de existencia previa a operaciones
+## 🧠 Patrones de Diseño Implementados
 
-## Ejecución
-1. Compilar:
-   ```bash
-   javac SistemaBiblioteca.java
-   ```
-2. Ejecutar:
-   ```bash
-   java SistemaBiblioteca
-   ```
+### 🔒 1. Singleton (Creacional) - `Biblioteca`
 
-## Mejoras Futuras
-- Implementar persistencia en base de datos
-- Añadir soporte para formatos de exportación (PDF, CSV)
-- Implementar búsquedas avanzadas por autor o año
-- Es útil cuando la creación de un objeto es costosa o compleja. Permite crear copias a partir de un objeto existente, lo que simplifica la instanciación de nuevos objetos similares.
+**Justificación**:  
+Se necesita una única instancia central de la biblioteca para evitar inconsistencias en el acceso y modificación de los libros.
+
+**Cómo y dónde se aplica**:  
+La clase `Biblioteca` tiene un constructor privado y un método estático `getInstancia()` que asegura que solo se cree una única instancia a lo largo del programa. Esta instancia centraliza la gestión de libros.
+
+---
+
+### 🧬 2. Prototype (Creacional) - `Libro`, `LibroFisico`
+
+**Justificación**:  
+A veces es útil clonar libros a partir de uno existente, por ejemplo, al registrar múltiples copias similares con ligeras variaciones.
+
+**Cómo y dónde se aplica**:  
+La clase abstracta `Libro` implementa `Cloneable` y define un método `clonar()` que es sobrescrito por `LibroFisico`. Así se puede duplicar fácilmente un libro sin depender de la creación desde cero.
+
+---
+
+### 🧱 3. Bridge (Estructural) - `Formato`, `FormatoSimple`, `FormatoCompleto`
+
+**Justificación**:  
+Permite separar la lógica del sistema (gestión de libros) de la forma en que se presentan, facilitando la extensión o modificación de los formatos de salida sin alterar las clases base.
+
+**Cómo y dónde se aplica**:  
+Se define una interfaz `Formato` y dos implementaciones: `FormatoSimple` y `FormatoCompleto`. Aunque no se usa en la UI actual por consola, esta estructura permite mostrar los libros de distintas maneras (por ejemplo, en una futura interfaz gráfica o reporte impreso).
+
+---
+
+## 🚀 ## Instrucciones de uso:
+### Software requerido:
+- Netbeans 12 en adelante.
+- JDK 24 (recomendado)
+### Instrucciones:
+- Descargar `sistema de biblioteca`.
+- Abrir proyecto.
+- Iniciar.
 
