@@ -22,10 +22,10 @@ Este sistema permite gestionar una biblioteca, registrar libros y realizar prés
    - **Cómo**: Se crea una clase `FormatoAdapter` que toma un objeto `Libro` y proporciona un método para mostrar su información.
    - **Dónde**: En la clase `FormatoAdapter`.
 
-4. **Iterator (BibliotecaIterator)**
-   - **Por qué**: Para proporcionar una forma de recorrer los libros de la biblioteca de manera eficiente sin exponer su estructura interna.
-   - **Cómo**: Se implementa la interfaz `Iterator` y se crea la clase `BibliotecaIterator` que permite iterar sobre la lista de libros.
-   - **Dónde**: En las clases `Iterator` y `BibliotecaIterator`.
+4. **Bridge (BridgeFormato)**
+   - **Por qué**: Para separar la abstracción de los formatos de los libros de su implementación.
+   - **Cómo**: Se define una clase abstracta `BridgeFormato` y se implementa en `FormatoPDF`.
+   - **Dónde**: En la clase `BridgeFormato`.
 
 ## Instrucciones de Compilación y Ejecución
 1. Clona el repositorio.
