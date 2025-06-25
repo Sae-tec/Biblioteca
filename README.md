@@ -3,33 +3,40 @@ Nombre: Benjamin Vivero
 
 Seccion: 2
 ## Descripción del Sistema
-Este sistema permite gestionar una biblioteca, registrar libros y realizar préstamos. Utiliza patrones de diseño para mejorar la estructura y funcionalidad del código.
+Este proyecto implementa tres patrones de diseño en Java: **Singleton**, **Bridge** y **Prototype**. Cada patrón tiene un propósito específico en el desarrollo de software, y se utiliza para resolver problemas comunes de diseño.
 
 ## Patrones de Diseño Implementados
 
-1. **Singleton (BibliotecaSingleton)**
-   - **Por qué**: Para asegurar que solo exista una instancia de la biblioteca en todo el sistema.
-   - **Cómo**: Se utiliza un método estático `getInstance()` que controla la creación de la instancia.
-   - **Dónde**: En la clase `BibliotecaSingleton`.
+### 1. Singleton (Creacional)
 
-2. **Prototype (LibroPrototype)**
-   - **Por qué**: Para permitir la creación de copias de libros sin necesidad de instanciar nuevos objetos manualmente.
-   - **Cómo**: Se implementa el método `clone()` que retorna una nueva instancia de `LibroPrototype`.
-   - **Dónde**: En la clase `LibroPrototype`.
+**Descripción**: El patrón Singleton asegura que una clase tenga una única instancia y proporciona un punto de acceso global a ella.
 
-3. **Adapter (FormatoAdapter)**
-   - **Por qué**: Para adaptar la visualización de los libros a diferentes formatos sin modificar la clase `Libro`.
-   - **Cómo**: Se crea una clase `FormatoAdapter` que toma un objeto `Libro` y proporciona un método para mostrar su información.
-   - **Dónde**: En la clase `FormatoAdapter`.
+**Uso en el Proyecto**:
+- La clase `Singleton` implementa este patrón. Su constructor es privado, lo que impide que se creen instancias desde fuera de la clase.
+- El método `getInstance()` garantiza que solo se cree una instancia de `Singleton`, y la devuelve a cualquier parte del código que la solicite.
 
-4. **Bridge (BridgeFormato)**
-   - **Por qué**: Para separar la abstracción de los formatos de los libros de su implementación.
-   - **Cómo**: Se define una clase abstracta `BridgeFormato` y se implementa en `FormatoPDF`.
-   - **Dónde**: En la clase `BridgeFormato`.
+**Por qué usarlo**:
+- Es útil cuando se necesita un control centralizado sobre un recurso, como una conexión a una base de datos o una configuración global.
 
-## Instrucciones de Compilación y Ejecución
-1. Clona el repositorio.
-2. Navega a la carpeta del proyecto.
-3. Compila el proyecto con `javac src/main/java/com/biblioteca/*.java`.
-4. Ejecuta el programa con `java com.biblioteca.Main`.
+### 2. Bridge (Estructural)
+
+**Descripción**: El patrón Bridge desacopla una abstracción de su implementación, permitiendo que ambas evolucionen de manera independiente.
+
+**Uso en el Proyecto**:
+- Se define una interfaz `Implementor` y dos implementaciones concretas (`ConcreteImplementorA` y `ConcreteImplementorB`).
+- La clase abstracta `Abstraction` contiene una referencia a un objeto `Implementor`, y la clase `RefinedAbstraction` extiende `Abstraction` para implementar el método `operation()`, que utiliza el `Implementor`.
+
+**Por qué usarlo**:
+- Permite cambiar la implementación de la abstracción sin modificar su interfaz, facilitando la escalabilidad y la flexibilidad en el diseño del sistema.
+
+### 3. Prototype (Comportamiento)
+
+**Descripción**: El patrón Prototype permite copiar objetos existentes sin hacer el código dependiente de sus clases.
+
+**Uso en el Proyecto**:
+- La clase `Prototype` es abstracta y define el método `clone()`.
+- `ConcretePrototype` extiende `Prototype` y proporciona una implementación específica de `clone()`, creando una nueva instancia con los mismos atributos.
+
+**Por qué usarlo**:
+- Es útil cuando la creación de un objeto es costosa o compleja. Permite crear copias a partir de un objeto existente, lo que simplifica la instanciación de nuevos objetos similares.
 
